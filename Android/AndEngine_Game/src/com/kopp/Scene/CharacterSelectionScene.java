@@ -41,7 +41,7 @@ public class CharacterSelectionScene extends BaseScene implements IOnMenuItemCli
 				 assassinButtonText, engineerButtonText,
 				 mageButtonText, startButtonText;
 	private PhysicsWorld physicsWorld;
-	private MenuScene gameChildScene;
+	private MenuScene characterChildScene;
 	private Sprite warrior;
 	
 	private IMenuItem warriorMenuItem, knightMenuItem, 
@@ -63,8 +63,8 @@ public class CharacterSelectionScene extends BaseScene implements IOnMenuItemCli
 	
 	private void createMenuChildScene()
 	{
-	    gameChildScene = new MenuScene(camera);
-	    gameChildScene.setPosition(0, 0);
+	    characterChildScene = new MenuScene(camera);
+	    characterChildScene.setPosition(0, 0);
 	    
 	    ////////////////////////////////////////////////////////////////////////////////////
 	    //Character Selection Menu Button Items
@@ -130,27 +130,27 @@ public class CharacterSelectionScene extends BaseScene implements IOnMenuItemCli
 	    ////////////////////////////////////////////////////////////////////////////////////
 	    //Add Buttons to Character Selection Scene
 	    ////////////////////////////////////////////////////////////////////////////////////
-	    gameChildScene.addMenuItem(warriorMenuItem);
-	    gameChildScene.addMenuItem(knightMenuItem);
-	    gameChildScene.addMenuItem(assassinMenuItem);
-	    gameChildScene.addMenuItem(clericMenuItem);
-	    gameChildScene.addMenuItem(engineerMenuItem);
-	    gameChildScene.addMenuItem(mageMenuItem);
-	    gameChildScene.addMenuItem(rangerMenuItem);
-	    gameChildScene.addMenuItem(playGameMenuItem);
+	    characterChildScene.addMenuItem(warriorMenuItem);
+	    characterChildScene.addMenuItem(knightMenuItem);
+	    characterChildScene.addMenuItem(assassinMenuItem);
+	    characterChildScene.addMenuItem(clericMenuItem);
+	    characterChildScene.addMenuItem(engineerMenuItem);
+	    characterChildScene.addMenuItem(mageMenuItem);
+	    characterChildScene.addMenuItem(rangerMenuItem);
+	    characterChildScene.addMenuItem(playGameMenuItem);
 	    
 	    ////////////////////////////////////////////////////////////////////////////////////
 	    //Attach Sprite Class Portraits to Character Selection Scene
 	    ////////////////////////////////////////////////////////////////////////////////////
-	    gameChildScene.attachChild(warrior);
+	    characterChildScene.attachChild(warrior);
 	    //gameChildScene.attachChild(knight);
 	    //gameChildScene.attachChild(assassin);
 	    //gameChildScene.attachChild(engineer);
 	    //gameChildScene.attachChild(cleric);
 	    //gameChildScene.attachChild(mage);
 	    
-	    gameChildScene.buildAnimations();
-	    gameChildScene.setBackgroundEnabled(false);
+	    characterChildScene.buildAnimations();
+	    characterChildScene.setBackgroundEnabled(false);
 	    
 	    
 	    ////////////////////////////////////////////////////////////////////////////////////
@@ -174,9 +174,9 @@ public class CharacterSelectionScene extends BaseScene implements IOnMenuItemCli
 	   
 	    playGameMenuItem.setVisible(false);
 	    
-	    gameChildScene.setOnMenuItemClickListener(this);
+	    characterChildScene.setOnMenuItemClickListener(this);
 	    
-	    setChildScene(gameChildScene);
+	    setChildScene(characterChildScene);
 	}
 
 	private void createBackground()

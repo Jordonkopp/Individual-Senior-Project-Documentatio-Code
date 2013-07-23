@@ -44,9 +44,13 @@ public class ResourceManager
     					  rangerButton, playGameButton, 
     					  warriorCharacter, knightCharacter, 
     					  assassinCharacter, engineerCharacter, 
-    					  clericCharacter, mageCharacter;
+    					  clericCharacter, mageCharacter,
+    					  character1Portrait,character2Portrait,
+    					  character3Portrait, backPack,
+    					  worldMap, inventoryGid, 
+    					  equipmentArea, statsArea;
     
-    private BuildableBitmapTextureAtlas menuTextureAtlas, gameTextureAtlas;
+    private BuildableBitmapTextureAtlas menuTextureAtlas, characterSelectionTextureAtlas, gameTextureAtlas;
     
     public Font font;
 
@@ -94,6 +98,7 @@ public class ResourceManager
 	public void loadMenuTextures()
 	{
 	        menuTextureAtlas.load();
+	        
 	}
 	//////////////////////////////////////////////////////////////////////////
     //Unload Resources for Menu Scene
@@ -101,6 +106,9 @@ public class ResourceManager
     public void unloadMenuTextures()
     {
         menuTextureAtlas.unload();
+        menuBackgroundRegion = null;
+    	playButton  = null;
+    	optionsButton  = null;
     }
     //////////////////////////////////////////////////////////////////////////
     //Load Resources for Character Selection Scene
@@ -108,23 +116,23 @@ public class ResourceManager
     public void loadCharacterSelectGraphics()
     {
     	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
-    	gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+    	characterSelectionTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
     	
     	/////////////////////////////////////////////////////////////////////////////
     	//Character Selection Buttons
     	/////////////////////////////////////////////////////////////////////////////
-    	warriorButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "warriorSelection.png");
-    	knightButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "knightSelection.png");
-    	assassinButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "assassinSelection.png");
-    	engineerButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "engineerSelection.png");
-    	clericButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "clericSelection.png");
-    	mageButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "mageSelection.png");
-    	rangerButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "rangerSelection.png");
+    	warriorButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "warriorSelection.png");
+    	knightButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "knightSelection.png");
+    	assassinButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "assassinSelection.png");
+    	engineerButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "engineerSelection.png");
+    	clericButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "clericSelection.png");
+    	mageButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "mageSelection.png");
+    	rangerButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "rangerSelection.png");
     
     	/////////////////////////////////////////////////////////////////////////////
     	//Character Sprites
     	/////////////////////////////////////////////////////////////////////////////
-    	warriorCharacter = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "warriorCharacter.png");
+    	warriorCharacter = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "warriorCharacter.png");
     	//knightCharacter = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "knightCharacter.png");
     	//assassinCharacter = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "assassinCharacter.png");
     	//engineerCharacter = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "engineerCharacter.png");
@@ -132,10 +140,10 @@ public class ResourceManager
     	//mageCharacter = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "mageCharacter.png");
     	
     	
-    	playGameButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "playGame.png");
+    	playGameButton = BitmapTextureAtlasTextureRegionFactory.createFromAsset(characterSelectionTextureAtlas, activity, "playGame.png");
     	try 
     	{
-    	    this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+    	    characterSelectionTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
     	    
     	} 
     	catch (final TextureAtlasBuilderException e)
@@ -143,9 +151,21 @@ public class ResourceManager
     	        Debug.e(e);
     	}
     	
-    	this.gameTextureAtlas.load();
+    	characterSelectionTextureAtlas.load();
     }
 
+    public void unloadCharacterSelectGraphics()
+    {
+    	characterSelectionTextureAtlas.unload();
+    	warriorButton = null;
+    	knightButton  = null;
+    	assassinButton  = null;
+    	engineerButton = null;
+    	clericButton  = null;
+    	mageButton  = null;
+    	rangerButton  = null;
+    	warriorCharacter = null;
+    }
     //////////////////////////////////////////////////////////////////////////
     //Load Resources for Game Scene
     //////////////////////////////////////////////////////////////////////////
@@ -158,7 +178,37 @@ public class ResourceManager
     
     private void loadGameGraphics()
     {
+    	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
+    	gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
     	
+    	
+    	
+    	character1Portrait = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "portrait.jpg");
+    	character2Portrait = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "portrait2.jpg");
+    	character3Portrait = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "portrait3.jpg");
+    	
+    	inventoryGid = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "inventory.png");
+    	
+    	backPack = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "backpack.jpg");
+    	
+    	worldMap = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "worldMap.jpg");
+    	
+    	equipmentArea = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "currentEquipmentSlots.png");
+    	
+    	statsArea = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "statsArea.png");
+    	
+    	
+    	try 
+    	{
+    	    gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+    	    
+    	} 
+    	catch (final TextureAtlasBuilderException e)
+    	{
+    	        Debug.e(e);
+    	}
+    	
+    	gameTextureAtlas.load();
     }
     
     private void loadGameFonts()
